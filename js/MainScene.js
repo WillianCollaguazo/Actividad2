@@ -6,7 +6,6 @@ class MainScene extends Phaser.Scene
         this.load.tilemapTiledJSON('map','res/Map.json');
         this.load.image('bg-1', 'res/sky.png');
         this.load.image('sea', 'res/sea.png');
-        this.load.image('player', 'res/idle-1.png');
         //Phaser.Physics.Arcade.Sprite
         // https://gammafp.com/tool/atlas-packer/
         this.load.atlas('sprites_jugador','res/player_anim/player_anim.png',
@@ -31,7 +30,6 @@ class MainScene extends Phaser.Scene
         this.physics.add.collider(this.player,layer);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
 
         
         this.objetos = map.getObjectLayer('objetos')['objects'];
@@ -50,9 +48,8 @@ class MainScene extends Phaser.Scene
         this.scoreText = this.add.text(16, 16, 'PUNTO: '+this.score, { 
             fontSize: '20px', 
             fill: '#000', 
-            fontFamily: 'verdana, arial, sans-serif' 
+            fontFamily: 'verdana, arial, sans-serif'
           });
-        
     }
 
     spriteHit (sprite1, sprite2) {
@@ -64,7 +61,8 @@ class MainScene extends Phaser.Scene
     update (time, delta)
     {
         this.player.update(time,delta);
-        this.scoreText.x=10;
+        this.scoreText.x=this.cameras.main.scrollX+16;
+        
     }
 
 }
