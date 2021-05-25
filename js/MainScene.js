@@ -47,7 +47,7 @@ class MainScene extends Phaser.Scene
             }
         }
         this.score = 1;
-        this.scoreText = this.add.text(16, 16, 'PUNTOS: '+this.score, { 
+        this.scoreText = this.add.text(16, 16, 'PUNTO: '+this.score, { 
             fontSize: '20px', 
             fill: '#000', 
             fontFamily: 'verdana, arial, sans-serif' 
