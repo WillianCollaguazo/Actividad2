@@ -1,14 +1,12 @@
-class Player extends Phaser.Physics.Arcade.Sprite
-{
-    constructor(scene,x,y)
-    {
-        super(scene,x,y,'player');
+class Player extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'player');
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
-       
+
 
         this.anims.create({
             key: 'walk',
@@ -29,40 +27,49 @@ class Player extends Phaser.Physics.Arcade.Sprite
             frameRate: 5,
             repeat: -1
         });
-        
-        
+
+
     }
 
-    update(time,delta)
-    {
-        if(this.cursor.left.isDown)
-        {
-            this.setVelocityX(-10*delta);
-            
-            this.setFlipX(true); 
+    update(time, delta) {
+        if (this.cursor.left.isDown) {
+            if (this.x > 0) {
+                console.log(this.x);
+                this.setVelocityX(-10 * delta);
+            }
+            this.setFlipX(true);
         }
-        else if(this.cursor.right.isDown)
-        {
-            this.setVelocityX(10*delta);
-            this.setFlipX(false); 
+        else if (this.cursor.right.isDown) {
+
+            this.setVelocityX(10 * delta);
+            this.setFlipX(false);
         }
-        else
-        {
+        else {
             //Parado
             this.setVelocityX(0);
         }
 
         if (this.cursor.space.isDown && this.body.onFloor()) {
-            
-            this.setVelocityY(-10*delta);
+
+            this.setVelocityY(-10 * delta);
         }
 
 
-        if(!this.body.onFloor())
+        if (!this.body.onFloor())
             this.play('jump', true);
-        else if(this.body.velocity.x != 0)
+        else if (this.body.velocity.x != 0)
             this.play('walk', true);
         else
             this.play('idle', true);
+
+        if(this.y>480)
+        {
+            this.RegresarInicio();
+        }
+    }
+
+    RegresarInicio()
+    {
+        this.setPosition(50,100);
     }
 }
