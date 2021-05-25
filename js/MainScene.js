@@ -55,7 +55,7 @@ class MainScene extends Phaser.Scene
     spriteHit (sprite1, sprite2) {
 
         sprite1.destroy();
- 
+        this.player.doubleJump=true;
     }
 
     update (time, delta)
