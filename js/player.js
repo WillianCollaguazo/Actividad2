@@ -1,6 +1,6 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
-        super(scene, x, y, 'player');
+        super(scene, x, y,'sprites_jugador');
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -34,7 +34,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(time, delta) {
         if (this.cursor.left.isDown) {
             if (this.x > 0) {
-                console.log(this.x);
                 this.setVelocityX(-10 * delta);
             }
             this.setFlipX(true);
@@ -56,7 +55,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
         if (!this.body.onFloor())
+        {
             this.play('jump', true);
+        }
         else if (this.body.velocity.x != 0)
             this.play('walk', true);
         else
