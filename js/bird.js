@@ -10,12 +10,12 @@ class Bird extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'walk',
-            frames: this.scene.anims.generateFrameNames('sprites_bird', { start: 1, end: 6, prefix: 'vuela_' }),
+            frames: this.scene.anims.generateFrameNames('sprites_bird', { start: 1, end: 8, prefix: 'vuela_' }),
             frameRate: 7,
             repeat: -1
         });
 
-        console.log(this);
+        this.tiempo=150;
         this.cont = 0;
     }
 
@@ -23,19 +23,19 @@ class Bird extends Phaser.Physics.Arcade.Sprite {
         this.play('walk', true);
         this.cont++;
         if (this.left) {
-            this.setVelocityX(-3 * delta);
+            this.setVelocityX(-2 * delta);
             this.setFlipX(false);
         }
         if (!this.left) {
-            this.setVelocityX(3 * delta);
+            this.setVelocityX(2 * delta);
             this.setFlipX(true);
         }
 
-        if (this.cont >= 100 && this.left) {
+        if (this.cont >= this.tiempo && this.left) {
             this.left = false;
             this.cont=0;
         }
-        if (this.cont >= 100 && !this.left) {
+        if (this.cont >= this.tiempo && !this.left) {
             this.left = true;
             this.cont=0;
         }
