@@ -1,5 +1,5 @@
 //Configuración de la escena
-var windows = {width:800,height: 480}
+var windows = {width:800,height: 576}
 var config = {
     type: Phaser.AUTO,
     width: windows.width,

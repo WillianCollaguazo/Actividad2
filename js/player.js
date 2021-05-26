@@ -76,11 +76,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.y > 480) {
             this.RegresarInicio();
         }
+
     }
 
     RegresarInicio() {
-        this.setPosition(50, 100);
+        this.setPosition(60, 100);
     }
+
 
     DoubleJumpActive(delta) {
 
