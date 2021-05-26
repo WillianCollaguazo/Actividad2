@@ -57,7 +57,7 @@ class MainScene extends Phaser.Scene
             }
         }
         this.score = 1;
-        this.scoreText = this.add.text(16, 16, 'PUNTO: '+this.score, { 
+        this.scoreText = this.add.text(16, 16, 'PUNTOS: '+this.score, { 
             fontSize: '20px', 
             fill: '#000', 
             fontFamily: 'verdana, arial, sans-serif'
@@ -65,7 +65,7 @@ class MainScene extends Phaser.Scene
     }
 
     spriteHit (sprite1, sprite2) {
-
+        this.showScore();
         sprite1.destroy();
         this.player.doubleJump=true;
     }
@@ -80,6 +80,11 @@ class MainScene extends Phaser.Scene
         this.bird.update();
         this.scoreText.x=this.cameras.main.scrollX+16;
         
+    }
+
+    showScore(){
+        this.score += 1;
+        this.scoreText.setText('PUNTOS: ' + this.score);
     }
 
 }
