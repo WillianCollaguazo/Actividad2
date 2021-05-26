@@ -12,10 +12,14 @@ class Bird extends Phaser.Physics.Arcade.Sprite {
             frameRate: 7,
             repeat: -1
         });
-    }
 
-    update()
+        console.log(this.scene);
+    }
+ 
+    update(time, delta)
     {
         this.play('walk', true);
+
+        //this.setVelocityX(-5 * delta);
     }
 }
