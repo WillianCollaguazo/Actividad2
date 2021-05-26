@@ -73,7 +73,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         else
             this.play('idle', true);
 
-        if (this.y > 480) {
+        if (this.y > 570) {
             this.RegresarInicio();
         }
 

@@ -1,13 +1,14 @@
+
 class MainScene extends Phaser.Scene
 {
-
+    
     preload()
     {
         this.load.image('tiles','res/Tileset.png');
         this.load.tilemapTiledJSON('map','res/Map_city2.json');
-        this.load.image('background', 'res/skyline-a.png');
-        this.load.image('background_1', 'res/buildings-bg.png');
-        this.load.image('background_2', 'res/near-buildings-bg.png');
+        this.load.image('background', 'res/skyline-a-long.png');
+        this.load.image('background_1', 'res/buildings-bg-long.png');
+        this.load.image('background_2', 'res/near-buildings-bg-long.png');
         this.load.image('bg-1', 'res/sky.png');
         this.load.image('sea', 'res/sea.png');
         //Phaser.Physics.Arcade.Sprite
@@ -24,20 +25,22 @@ class MainScene extends Phaser.Scene
 
     create()
     {
-        var bg0 = this.add.tileSprite(0, 0, windows.width*2, windows.height*2, 'background');
-        var bg1 = this.add.tileSprite(0, 0, windows.width*2, windows.height*2, 'background_1');
-        var bg2 = this.add.tileSprite(0, 0, windows.width*2, windows.height*2, 'background_2');
+        const width = this.scale.width;
+        const height = this.scale.height;
 
-       bg1.fixedToCamera = true;
+        this.createLoop(this, 2, 'background',0);
+        this.createLoop(this, 3, 'background_1',0.5);
+        this.createLoop(this, 3, 'background_2',0.75);
 
         var map = this.make.tilemap({ key: 'map' });
         var tiles = map.addTilesetImage('Tileset', 'tiles');
-        
+        var layerBlockout = map.createLayer('Blockout',tiles,0,0);
         var layerBuilding = map.createLayer('Building', tiles, 0, 0);
         var layerGround = map.createLayer('Ground', tiles, 0, 0);
         var layerAssets = map.createLayer('Assets', tiles, 0, 0);
         var layerBanner = map.createLayer('Banner', tiles, 0, 0);
-        let layerLadder = map.createLayer('Ladder', tiles, 0, 0);
+        var layerLadder = map.createLayer('Ladder', tiles, 0, 0);
+        
 
         //enable collisions for every tile
         layerGround.setCollisionByExclusion(-1,true);
@@ -50,7 +53,7 @@ class MainScene extends Phaser.Scene
         this.physics.add.collider(this.player,layerGround);
         this.physics.add.collider(this.bird,layerGround);
 
-        this.physics.add.overlap(this.bird, this.player, this.deadPlayer,null,this);       
+        // this.physics.add.overlap(this.bird, this.player, this.deadPlayer,null,this);       
 
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
@@ -77,6 +80,14 @@ class MainScene extends Phaser.Scene
           });
     }
 
+    //función para crear background infinito con efecto parallax
+    createLoop(scene, count, texture, scrollFactor){
+        var x = 0;
+        for(var i=0; i < count; ++i){
+            var bg = scene.add.image(0,scene.scale.height, texture).setOrigin(0,1).setScrollFactor(scrollFactor);
+            x += bg.width;
+        }
+    }
 
     spriteHit (sprite1, sprite2) {
         this.showScore();
