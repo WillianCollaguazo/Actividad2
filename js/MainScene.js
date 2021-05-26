@@ -10,6 +10,10 @@ class MainScene extends Phaser.Scene
         // https://gammafp.com/tool/atlas-packer/
         this.load.atlas('sprites_jugador','res/player_anim/player_anim.png',
         'res/player_anim/player_anim_atlas.json');
+
+        this.load.atlas('sprites_bird','res/player_anim/ave.png',
+        'res/player_anim/ave_atlas.json');
+
         this.load.spritesheet('tilesSprites','res/Tileset.png',
         { frameWidth: 32, frameHeight: 32 });
     }
@@ -18,8 +22,7 @@ class MainScene extends Phaser.Scene
     {
         var bg_1 = this.add.tileSprite(0, 0, windows.width*2, windows.height*2, 'bg-1');
         bg_1.fixedToCamera = true;
-        //necesitamos un player
-        this.player = new Player(this,50,100);
+
         var map = this.make.tilemap({ key: 'map' });
         var tiles = map.addTilesetImage('Plataformas', 'tiles');
         
@@ -27,7 +30,16 @@ class MainScene extends Phaser.Scene
         var layer = map.createLayer('Suelo', tiles, 0, 0);
         //enable collisions for every tile
         layer.setCollisionByExclusion(-1,true);
+
+        //necesitamos un player
+        this.player = new Player(this,50,100);
+        this.bird = new Bird(this,750,294);
+
         this.physics.add.collider(this.player,layer);
+        this.physics.add.collider(this.bird,layer);
+
+        this.physics.add.overlap(this.bird, this.player, this.deadPlayer,null,this);
+
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
 
@@ -58,9 +70,14 @@ class MainScene extends Phaser.Scene
         this.player.doubleJump=true;
     }
 
+    deadPlayer (sprite1, sprite2) {
+        this.player.RegresarInicio();
+    }
+
     update (time, delta)
     {
         this.player.update(time,delta);
+        this.bird.update();
         this.scoreText.x=this.cameras.main.scrollX+16;
         
     }
