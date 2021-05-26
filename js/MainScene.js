@@ -77,7 +77,7 @@ class MainScene extends Phaser.Scene
     update (time, delta)
     {
         this.player.update(time,delta);
-        this.bird.update();
+        this.bird.update(time, delta);
         this.scoreText.x=this.cameras.main.scrollX+16;
         
     }
