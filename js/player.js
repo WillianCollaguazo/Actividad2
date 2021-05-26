@@ -85,9 +85,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     DoubleJumpActive(delta) {
 
         if (!this.body.onFloor() && this.doubleJump) {
-            console.log("doble");
             this.setVelocityY(-10 * delta);
             this.doubleJump = false;
+            this.scene.jumpDouble.destroy();
         }
     }
 }
