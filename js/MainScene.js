@@ -11,6 +11,7 @@ class MainScene extends Phaser.Scene
         this.load.image('background_2', 'res/near-buildings-bg-long.png');
         this.load.image('bg-1', 'res/sky.png');
         this.load.image('sea', 'res/sea.png');
+        this.load.image('sprites_doubleJump', 'res/doble jump.png');
         //Phaser.Physics.Arcade.Sprite
         // https://gammafp.com/tool/atlas-packer/
         this.load.atlas('sprites_jugador','res/player_anim/player_anim.png',
@@ -47,13 +48,15 @@ class MainScene extends Phaser.Scene
         layerLadder.setCollisionByExclusion(-1,true);
 
         //necesitamos un player
-        this.player = new Player(this,60,100);
-        this.bird = new Bird(this,770,294);      
+        this.player = new Player(this,145,263);
+        this.bird = new Bird(this,895,318,340);      
+        this.jumpDouble = new DoubleJump(this, 465, 300);
 
         this.physics.add.collider(this.player,layerGround);
         this.physics.add.collider(this.bird,layerGround);
 
-        // this.physics.add.overlap(this.bird, this.player, this.deadPlayer,null,this);       
+        this.physics.add.overlap(this.bird, this.player, this.deadPlayer,null,this);  
+        this.physics.add.overlap(this.jumpDouble, this.player, this.dobleJump, null, this);     
 
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
@@ -92,13 +95,17 @@ class MainScene extends Phaser.Scene
     spriteHit (sprite1, sprite2) {
         this.showScore();
         sprite1.destroy();
-        this.player.doubleJump=true;
     }
 
     deadPlayer (sprite1, sprite2) {
         console.log("toco");
         this.player.RegresarInicio();
-    
+    }
+
+    dobleJump(sprite1,sprite2)
+    {
+        sprite1.setPosition(40,60);
+        this.player.doubleJump=true;
     }
 
     update (time, delta)
@@ -107,7 +114,10 @@ class MainScene extends Phaser.Scene
         this.player.update(time,delta);
         this.bird.update(time, delta);
         this.scoreText.x=this.cameras.main.scrollX+16;
-        
+        if(this.player.doubleJump)
+        {
+            this.jumpDouble.x = this.cameras.main.scrollX + 40;
+        }
     }
 
     showScore(){
