@@ -4,7 +4,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        
+
         this.doubleJump = false;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
@@ -34,6 +34,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(time, delta) {
+
         if (this.cursor.left.isDown) {
 
             if (this.x - (this.width / 2) - 5 > 0) {
@@ -45,7 +46,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setFlipX(true);
         }
         else if (this.cursor.right.isDown) {
-            this.setVelocityX(10 * delta);
+            if (this.x + (this.width/2)+5 < this.scene.cameras.main._bounds.width) {
+                this.setVelocityX(10 * delta);
+            }
+            else {
+                this.setVelocityX(0);
+            }
             this.setFlipX(false);
         }
         else {
@@ -80,7 +86,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     RegresarInicio() {
-        this.setPosition(60, 100);
+        this.setPosition(145, 263);
+        this.setFlipX(false);
     }
 
 
@@ -90,6 +97,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(-10 * delta);
             this.doubleJump = false;
             this.scene.jumpDouble.destroy();
+
         }
     }
 }

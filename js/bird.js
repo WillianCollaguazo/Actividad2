@@ -1,5 +1,5 @@
 class Bird extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, recorrido) {
         super(scene, x, y, 'sprites_bird');
         this.scene = scene;
         this.scene.add.existing(this);
@@ -15,7 +15,7 @@ class Bird extends Phaser.Physics.Arcade.Sprite {
             repeat: -1
         });
 
-        this.tiempo=150;
+        this.tiempo=recorrido;
         this.cont = 0;
     }
 
