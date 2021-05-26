@@ -4,6 +4,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
+        
         this.doubleJump = false;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
