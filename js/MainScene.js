@@ -33,7 +33,7 @@ class MainScene extends Phaser.Scene
 
         //necesitamos un player
         this.player = new Player(this,50,100);
-        this.bird = new Bird(this,750,294);
+        this.bird = new Bird(this,770,294);
 
         this.physics.add.collider(this.player,layer);
         this.physics.add.collider(this.bird,layer);
