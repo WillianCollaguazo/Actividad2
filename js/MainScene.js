@@ -11,7 +11,7 @@ class MainScene extends Phaser.Scene {
         this.load.image('sprites_doubleJump', 'res/doble jump.png');
         this.load.image('sprites_healthBar', 'res/healthBar.png');
         this.load.image('sprites_return', 'res/return.png');
-        this.load.image('points', 'res/ScoreBoard.png');
+        this.load.image('points', 'res/ScoreBoard.png'); 
         this.load.image('sprites_finish', 'res/finish.png');
 
         this.load.atlas('sprites_jugador', 'res/player_anim/player_anim.png',
