@@ -1,9 +1,7 @@
-class Player extends Phaser.Physics.Arcade.Sprite {
+class Player extends SpriteGen {
     constructor(scene, x, y) {
         super(scene, x, y, 'sprites_jugador');
-        this.scene = scene;
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
+
 
         this.doubleJump = false;
         this.health = 1;

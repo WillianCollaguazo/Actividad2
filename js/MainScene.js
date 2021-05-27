@@ -1,16 +1,13 @@
 
-class MainScene extends Phaser.Scene
-{
+class MainScene extends Phaser.Scene{
     
-    preload()
-    {
+    preload(){
         this.load.image('tiles','res/Tileset.png');
         this.load.tilemapTiledJSON('map','res/Map_city2.json');
         this.load.image('background', 'res/skyline-a-long.png');
         this.load.image('background_1', 'res/buildings-bg-long.png');
         this.load.image('background_2', 'res/near-buildings-bg-long.png');
-        this.load.image('bg-1', 'res/sky.png');
-        this.load.image('sea', 'res/sea.png');
+        this.load.image('disk', 'res/disk.png');
         this.load.image('sprites_doubleJump', 'res/doble jump.png');
         this.load.image('sprites_healthBar', 'res/healthBar.png');
         this.load.image('sprites_return', 'res/return.png');
@@ -26,10 +23,7 @@ class MainScene extends Phaser.Scene
         { frameWidth: 32, frameHeight: 32 });
     }
 
-    create()
-    {
-        const width = this.scale.width;
-        const height = this.scale.height;
+    create(){
 
         this.createLoop(this, 2, 'background',0);
         this.createLoop(this, 3, 'background_1',0.5);
