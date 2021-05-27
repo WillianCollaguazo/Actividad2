@@ -80,7 +80,8 @@ class MainScene extends Phaser.Scene{
                  this.physics.add.overlap(this.boots, this.player, this.dobleJump, null, this);  
              }
          }
-    
+        
+
         
         //scoreboard
         var points = this.add.sprite(90,55,'points').setScrollFactor(0);

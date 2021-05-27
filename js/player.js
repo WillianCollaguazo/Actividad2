@@ -4,6 +4,8 @@ class Player extends MySprite {
 
 
         this.doubleJump = false;
+        this.health = 1;
+        this.speed = 10;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
 
@@ -36,7 +38,7 @@ class Player extends MySprite {
         if (this.cursor.left.isDown) {
 
             if (this.x - (this.width / 2) - 5 > 0) {
-                this.setVelocityX(-10 * delta);
+                this.setVelocityX(-this.speed * delta);
             }
             else {
                 this.setVelocityX(0);
@@ -45,7 +47,7 @@ class Player extends MySprite {
         }
         else if (this.cursor.right.isDown) {
             if (this.x + (this.width/2)+5 < this.scene.cameras.main._bounds.width) {
-                this.setVelocityX(10 * delta);
+                this.setVelocityX(this.speed * delta);
             }
             else {
                 this.setVelocityX(0);
@@ -78,14 +80,24 @@ class Player extends MySprite {
             this.play('idle', true);
 
         if (this.y > 570) {
-            this.RegresarInicio();
+            //this.RegresarInicio();
         }
 
     }
 
-    RegresarInicio() {
+    Damaged() {
+        
+        this.health -= 1;
+        if(this.health == 0){
+            console.log("muerte subita");
+
+           
+            
+        }else{
+            console.log(this.health);
         this.setPosition(145, 263);
         this.setFlipX(false);
+        }
     }
 
 
@@ -98,4 +110,6 @@ class Player extends MySprite {
 
         }
     }
+
+  
 }
