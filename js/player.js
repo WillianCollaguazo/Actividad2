@@ -2,14 +2,16 @@ class Player extends MySprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'sprites_jugador');
 
-
+        //manejo de doble salto del player y objeto botas
         this.doubleJump = false;
-        this.spriteDoubleJump=undefined;
+        this.spriteDoubleJump = undefined;
+
+        //Cantidad de vidad y velocidad del player
         this.health = 5;
         this.speed = 10;
-        //continuación
-        this.cursor = this.scene.input.keyboard.createCursorKeys();
 
+        //captura de tecla a presionar
+        this.cursor = this.scene.input.keyboard.createCursorKeys();
 
         this.anims.create({
             key: 'walk',
@@ -59,6 +61,7 @@ class Player extends MySprite {
             this.setVelocityX(0);
         }
 
+        //captura del espacio presionado una sola vez
         const ispressSpace = Phaser.Input.Keyboard.JustDown(this.cursor.space);
 
         if (ispressSpace && (this.body.onFloor() || this.doubleJump)) {
@@ -85,6 +88,7 @@ class Player extends MySprite {
 
     }
 
+    //Función de disminución de vida o presentación de Game Over
     Damaged() {
         this.scene.energyMask.x -= this.scene.stepWidth;
         this.health -= 1;
@@ -96,20 +100,20 @@ class Player extends MySprite {
         }
     }
 
-
+    //función si tiene doble jump, ejecuta el segundo salto en el aire
     DoubleJumpActive(delta) {
 
         if (!this.body.onFloor() && this.doubleJump) {
             this.setVelocityY(-10 * delta);
             this.doubleJump = false;
-            if(this.spriteDoubleJump!=undefined)
-            {
+            if (this.spriteDoubleJump != undefined) {
                 this.spriteDoubleJump.destroy();
-                this.spriteDoubleJump=undefined;
+                this.spriteDoubleJump = undefined;
             }
         }
     }
 
+    //Reposiciona el player al inicio del escenario
     RegresarInicio() {
         this.setPosition(145, 263);
         this.setFlipX(false);
