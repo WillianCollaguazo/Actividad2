@@ -6,6 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this);
 
         this.doubleJump = false;
+        this.health = 1;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
 
@@ -80,14 +81,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.play('idle', true);
 
         if (this.y > 570) {
-            this.RegresarInicio();
+            //this.RegresarInicio();
         }
 
     }
 
-    RegresarInicio() {
+    Damaged() {
+        
+        this.health -= 1;
+        if(this.health == 0){
+            console.log("muerte subita");
+
+           
+            
+        }else{
+            console.log(this.health);
         this.setPosition(145, 263);
         this.setFlipX(false);
+        }
     }
 
 
@@ -100,4 +111,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         }
     }
+
+  
 }

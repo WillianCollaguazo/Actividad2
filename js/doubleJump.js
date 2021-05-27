@@ -6,5 +6,6 @@ class DoubleJump extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this);
         this.body.allowGravity = false;
         this.setScale(0.12);
+        
     }
 }
