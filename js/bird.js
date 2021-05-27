@@ -1,9 +1,6 @@
-class Bird extends Phaser.Physics.Arcade.Sprite {
+class Bird extends MySprite {
     constructor(scene, x, y, recorrido) {
         super(scene, x, y, 'sprites_bird');
-        this.scene = scene;
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
 
         this.setOrigin(0, 1);
         this.left = true;
