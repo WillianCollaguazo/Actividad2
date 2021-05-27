@@ -46,7 +46,7 @@ class MainScene extends Phaser.Scene {
         layerGround.setCollisionByExclusion(-1, true);
 
         //necesitamos un player
-        this.player = new Player(this, 1200, 263);
+        this.player = new Player(this, 145, 263);
 
         //creacion de los discos colectables
         var objectsJSON = map.getObjectLayer('Disks')['objects'];
