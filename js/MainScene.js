@@ -23,6 +23,7 @@ class MainScene extends Phaser.Scene{
         { frameWidth: 32, frameHeight: 32 });
     }
 
+    
     create(){
 
         this.createLoop(this, 2, 'background',0);
@@ -58,10 +59,19 @@ class MainScene extends Phaser.Scene{
         this.energyMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask);
         this.stepWidth = this.energyMask.displayWidth / this.player.health;
-        this.returnButton = this.add.sprite(this.screenCenterX,this.screenCenterY+80,'sprites_return').setOrigin(0.5);
+        
+        //this.returnButton = this.add.button(this.screenCenterX,this.screenCenterY+80, 400, 'sprites_return', this.actionOnClick, this, 2, 1, 0).setOrigin(0.5);
+        this.returnButton = this.add.sprite(this.screenCenterX,this.screenCenterY+80,'sprites_return',this.actionOnClick).setOrigin(0.5);
+        this.returnButton.setInteractive();
         this.returnButton.setScale(0.30);
         this.returnButton.visible = false;
         this.returnButton.setScrollFactor(0);
+
+        //this.returnButton.on('pointerover', function(){this.button.setTint(0xf0ff00);}, this)
+        //this.returnButton.on('pointerout', function(){this.button.setTint(0xffffff);}, this)
+        this.returnButton.on('pointerdown', function(){
+            this.player.speed = 10;
+        });
         
 
         this.physics.add.collider(this.player,layerGround);
@@ -126,7 +136,8 @@ class MainScene extends Phaser.Scene{
             //this.player.Damaged();
             this.gameOverText.setText('GAME OVER!');
             this.returnButton.visible = true;
-            this.player.destroy();
+            this.player.speed = 0;
+            this.player.visible = false;
         }else{
             this.energyMask.x -= this.stepWidth;
             this.player.Damaged();
@@ -163,6 +174,14 @@ class MainScene extends Phaser.Scene{
     showScore(){
         this.score += 1;
         this.scoreText.setText('PUNTOS: ' + this.score);
+    }
+
+    Replay(){
+        this.gameOverText.visible = false;
+        this.returnButton.visible = false;
+        this.player.speed = 10;
+        this.player.health = 5;
+        this.player.visible = true;
     }
 
 }

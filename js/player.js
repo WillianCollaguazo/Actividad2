@@ -5,6 +5,7 @@ class Player extends SpriteGen {
 
         this.doubleJump = false;
         this.health = 1;
+        this.speed = 10;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
 
@@ -37,7 +38,7 @@ class Player extends SpriteGen {
         if (this.cursor.left.isDown) {
 
             if (this.x - (this.width / 2) - 5 > 0) {
-                this.setVelocityX(-10 * delta);
+                this.setVelocityX(-this.speed * delta);
             }
             else {
                 this.setVelocityX(0);
@@ -46,7 +47,7 @@ class Player extends SpriteGen {
         }
         else if (this.cursor.right.isDown) {
             if (this.x + (this.width/2)+5 < this.scene.cameras.main._bounds.width) {
-                this.setVelocityX(10 * delta);
+                this.setVelocityX(this.speed * delta);
             }
             else {
                 this.setVelocityX(0);
