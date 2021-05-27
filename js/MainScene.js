@@ -12,6 +12,7 @@ class MainScene extends Phaser.Scene {
         this.load.image('sprites_healthBar', 'res/healthBar.png');
         this.load.image('sprites_return', 'res/return.png');
         this.load.image('points', 'res/ScoreBoard.png');
+        this.load.image('sprites_finish', 'res/finish.png');
 
         this.load.atlas('sprites_jugador', 'res/player_anim/player_anim.png',
             'res/player_anim/player_anim_atlas.json');
@@ -47,6 +48,9 @@ class MainScene extends Phaser.Scene {
 
         //necesitamos un player
         this.player = new Player(this, 145, 263);
+        this.finish = new FinishGame(this, 1750, 195);
+        this.finish.setScale(0.2);
+
 
         //creacion de los discos colectables
         var objectsJSON = map.getObjectLayer('Disks')['objects'];
@@ -61,12 +65,13 @@ class MainScene extends Phaser.Scene {
         }
         this.physics.add.collider(this.disks, layerGround);
 
-        this.birds=[];
+        this.birds = [];
         this.birds.push(new Bird(this, 895, 318, 340));
         this.birds.push(new Bird(this, 560, 100, 350));
         this.birds.push(new Bird(this, 1470, 330, 230));
 
         this.physics.add.collider(this.player, layerGround);
+        this.physics.add.collider(this.finish, layerGround);
         this.physics.add.collider(this.birds, layerGround);
 
         var points = this.add.sprite(90, 55, 'points').setScrollFactor(0);
@@ -82,6 +87,7 @@ class MainScene extends Phaser.Scene {
 
 
         this.physics.add.overlap(this.birds, this.player, this.deadPlayer, null, this);
+        this.physics.add.overlap(this.finish, this.player, this.finishGame, null, this);
 
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
@@ -151,6 +157,13 @@ class MainScene extends Phaser.Scene {
         }
     }
 
+    finishGame() {
+        this.gameOverText.setText('FINISH');
+        this.returnButton.visible = true;
+        this.player.speed = 0;
+        this.player.visible = false;
+    }
+
     GameOver() {
         this.gameOverText.setText('GAME OVER!');
         this.returnButton.visible = true;
@@ -170,8 +183,7 @@ class MainScene extends Phaser.Scene {
     update(time, delta) {
         this.player.update(time, delta);
 
-        for(let i=0;i<this.birds.length;i++)
-        {
+        for (let i = 0; i < this.birds.length; i++) {
             this.birds[i].update(time, delta);
         }
     }
