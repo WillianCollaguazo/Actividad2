@@ -80,21 +80,17 @@ class Player extends MySprite {
             this.play('idle', true);
 
         if (this.y > 570) {
-            //this.RegresarInicio();
+            this.Damaged();
         }
 
     }
 
     Damaged() {
-
+        this.scene.energyMask.x -= this.scene.stepWidth;
         this.health -= 1;
         if (this.health == 0) {
-            console.log("muerte subita");
-
-
-
+            this.scene.GameOver();
         } else {
-            console.log(this.health);
             this.setPosition(145, 263);
             this.setFlipX(false);
         }
