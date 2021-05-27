@@ -1,17 +1,16 @@
 
-class MainScene extends Phaser.Scene
-{
+class MainScene extends Phaser.Scene{
     
-    preload()
-    {
+    preload(){
         this.load.image('tiles','res/Tileset.png');
         this.load.tilemapTiledJSON('map','res/Map_city2.json');
         this.load.image('background', 'res/skyline-a-long.png');
         this.load.image('background_1', 'res/buildings-bg-long.png');
         this.load.image('background_2', 'res/near-buildings-bg-long.png');
-        this.load.image('bg-1', 'res/sky.png');
-        this.load.image('sea', 'res/sea.png');
+        this.load.image('disk', 'res/disk.png');
         this.load.image('sprites_doubleJump', 'res/doble jump.png');
+        this.load.image('points', 'res/ScoreBoard.png');
+
         //Phaser.Physics.Arcade.Sprite
         // https://gammafp.com/tool/atlas-packer/
         this.load.atlas('sprites_jugador','res/player_anim/player_anim.png',
@@ -24,10 +23,7 @@ class MainScene extends Phaser.Scene
         { frameWidth: 32, frameHeight: 32 });
     }
 
-    create()
-    {
-        const width = this.scale.width;
-        const height = this.scale.height;
+    create(){
 
         this.createLoop(this, 2, 'background',0);
         this.createLoop(this, 3, 'background_1',0.5);
@@ -61,22 +57,23 @@ class MainScene extends Phaser.Scene
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
 
-                // this.objetos = map.getObjectLayer('objetos')['objects'];
-                // this.setas = [];
-                // for(var i = 0; i < this.objetos.length; ++i)
-                // {
-                //     var obj = this.objetos[i];
-                //     if(obj.gid == 115) // en mi caso la seta
-                //     {
-                //         var seta = new Seta(this,obj.x,obj.y);
-                //         this.setas.push(seta);
-                //         this.physics.add.overlap(seta, this.player, this.spriteHit,null,this);
-                //     }
-                // }
+        this.objectsJSON = map.getObjectLayer('Items')['objects'];
+        this.disks = [];
+        for(let i = 0; i < this.objectsJSON.length; i++)
+        {
+            var obj = objectsJSON[i];
+            if(obj.gid == 213) // gid de los discos
+            {
+                this.disks.push(new Disk(this, obj.x, obj.y));
+                // var disks = new Disk(this,obj.x,obj.y);
+                // this.disks.push(disk);
+                // this.physics.add.overlap(disk, this.player, this.spriteHit,null,this);
+            }
+        }
 
-
-        this.score = 1;
-        this.scoreText = this.add.text(16, 16, 'PUNTOS: '+this.score, { 
+        var points = this.add.sprite(90,55,'points').setScrollFactor(0);
+        this.score = 0;
+        this.scoreText = this.add.text(30, 35, 'PUNTOS: '+this.score, { 
             fontSize: '20px', 
             fill: '#fff', 
             fontFamily: 'verdana, arial, sans-serif'
@@ -110,10 +107,10 @@ class MainScene extends Phaser.Scene
 
     update (time, delta)
     {
-
         this.player.update(time,delta);
         this.bird.update(time, delta);
-        this.scoreText.x=this.cameras.main.scrollX+16;
+        this.scoreText.x = this.cameras.main.scrollX+30;
+
         if(this.player.doubleJump)
         {
             this.jumpDouble.x = this.cameras.main.scrollX + 40;
