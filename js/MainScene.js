@@ -53,11 +53,11 @@ class MainScene extends Phaser.Scene{
         this.physics.add.collider(this.bird,layerGround);
 
         var points = this.add.sprite(90,55,'points').setScrollFactor(0);
-        this.healthBar = this.add.sprite(111,70,'sprites_healthBar');
-        this.healthBar.setScale(0.38);
+        this.healthBar = this.add.sprite(90,70,'sprites_healthBar');
+        this.healthBar.setScale(0.25);
         this.healthBar.setScrollFactor(0);
         this.energyMask = this.add.sprite(this.healthBar.x, this.healthBar.y, 'sprites_healthBar');
-        this.energyMask.setScale(0.38);
+        this.energyMask.setScale(0.25);
         this.energyMask.setScrollFactor(0);
         this.energyMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask);

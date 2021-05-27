@@ -5,7 +5,7 @@ class Player extends MySprite {
 
         this.doubleJump = false;
         this.spriteDoubleJump=undefined;
-        this.health = 1;
+        this.health = 5;
         this.speed = 10;
         //continuación
         this.cursor = this.scene.input.keyboard.createCursorKeys();
