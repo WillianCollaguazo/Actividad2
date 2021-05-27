@@ -1,4 +1,4 @@
-class Player extends SpriteGen {
+class Player extends MySprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'sprites_jugador');
 
@@ -106,7 +106,7 @@ class Player extends SpriteGen {
         if (!this.body.onFloor() && this.doubleJump) {
             this.setVelocityY(-10 * delta);
             this.doubleJump = false;
-            this.scene.jumpDouble.destroy();
+            //this.scene.jumpDouble.destroy();
 
         }
     }

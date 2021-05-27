@@ -1,4 +1,4 @@
-class SpriteGen extends Phaser.Physics.Arcade.Sprite {
+class MySprite extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, name) {
         super(scene, x, y, name);
         this.scene = scene;

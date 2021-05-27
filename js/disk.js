@@ -1,6 +1,5 @@
-class Disk extends SpriteGen {
+class Disk extends MySprite {
     constructor(scene, x, y) {
-        super(scene,x,y,'disk');       
+        super(scene, x, y,'disk');       
     }
-
 }
