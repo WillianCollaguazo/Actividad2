@@ -11,8 +11,8 @@ class Bird extends MySprite {
             frameRate: 7,
             repeat: -1
         });
-
-        this.tiempo=recorrido;
+        //Movimiento del bird de izquierda a derecha de acuerdo al parametro recorrido.
+        this.tiempo = recorrido;
         this.cont = 0;
     }
 
@@ -30,11 +30,11 @@ class Bird extends MySprite {
 
         if (this.cont >= this.tiempo && this.left) {
             this.left = false;
-            this.cont=0;
+            this.cont = 0;
         }
         if (this.cont >= this.tiempo && !this.left) {
             this.left = true;
-            this.cont=0;
+            this.cont = 0;
         }
 
     }

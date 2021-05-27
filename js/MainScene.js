@@ -46,7 +46,7 @@ class MainScene extends Phaser.Scene {
         //enable collisions for every tile
         layerGround.setCollisionByExclusion(-1, true);
 
-        //necesitamos un player
+        //necesitamos un player, finish
         this.player = new Player(this, 145, 263);
         this.finish = new FinishGame(this, 1750, 195);
         this.finish.setScale(0.2);
@@ -65,6 +65,7 @@ class MainScene extends Phaser.Scene {
         }
         this.physics.add.collider(this.disks, layerGround);
 
+        //creación de 3 objetos tipo Bird, que son los enemigos en diferentes posiciones del escenario
         this.birds = [];
         this.birds.push(new Bird(this, 895, 318, 340));
         this.birds.push(new Bird(this, 560, 100, 350));
@@ -74,6 +75,7 @@ class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.finish, layerGround);
         this.physics.add.collider(this.birds, layerGround);
 
+        //Barra de vida presentado en el escenario 
         var points = this.add.sprite(90, 55, 'points').setScrollFactor(0);
         this.healthBar = this.add.sprite(90, 70, 'sprites_healthBar');
         this.healthBar.setScale(0.25);
@@ -106,8 +108,7 @@ class MainScene extends Phaser.Scene {
 
 
 
-        //scoreboard
-
+        //Total de puntos que va recogiendo en escenario
         this.score = 0;
         this.scoreText = this.add.text(30, 30, 'PUNTOS: ' + this.score, {
             fontSize: '20px',
@@ -115,7 +116,7 @@ class MainScene extends Phaser.Scene {
             fontFamily: 'verdana, arial, sans-serif'
         });
 
-
+        //Boton replay para reiniciar el juego, pero no se encuentra implementado
         this.returnButton = this.add.sprite(this.screenCenterX, this.screenCenterY + 80, 'sprites_return', this.actionOnClick).setOrigin(0.5);
         this.returnButton.setScale(0.30);
         this.returnButton.visible = false;
@@ -124,11 +125,15 @@ class MainScene extends Phaser.Scene {
         this.returnButton.on('pointerdown', function () {
             this.player.speed = 10;
         });
+
+        //Texto de Game Over o Finish
         this.gameOverText = this.add.text(this.screenCenterX, this.screenCenterY, '', {
             fontSize: '70px',
             fill: '#fff',
             fontFamily: 'verdana, arial, sans-serif'
         }).setOrigin(0.5);
+
+        //seguimiento de objetos al moverse la pantalla
         this.scoreText.setScrollFactor(0);
         this.gameOverText.setScrollFactor(0);
     }
@@ -143,11 +148,13 @@ class MainScene extends Phaser.Scene {
         }
     }
 
+    //función toma de disk para incrementar el puntaje y destruir el objeto
     spriteHit(sprite1, sprite2) {
         this.showScore();
         sprite1.destroy();
     }
 
+    //función cuando el player choca contra el enemigo (bird)
     deadPlayer(sprite1, sprite2) {
         //this.player.RegresarInicio();
         if (this.player.health == 0) {
@@ -157,6 +164,7 @@ class MainScene extends Phaser.Scene {
         }
     }
 
+    //Función para presentar en pantalla Finish, cuando toca la bandera
     finishGame() {
         this.gameOverText.setText('FINISH');
         this.returnButton.visible = true;
@@ -164,6 +172,7 @@ class MainScene extends Phaser.Scene {
         this.player.visible = false;
     }
 
+     //Función para presentar en pantalla Game over, cuando ya no tiene vidas el player
     GameOver() {
         this.gameOverText.setText('GAME OVER!');
         this.returnButton.visible = true;
@@ -171,6 +180,7 @@ class MainScene extends Phaser.Scene {
         this.player.visible = false;
     }
 
+    //Función para tener un doble jump, solo tiene un solo doble jump.
     dobleJump(sprite1, sprite2) {
         this.player.doubleJump = true
         if (this.player.spriteDoubleJump != undefined && this.player.spriteDoubleJump != sprite1) {
@@ -182,17 +192,18 @@ class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         this.player.update(time, delta);
-
         for (let i = 0; i < this.birds.length; i++) {
             this.birds[i].update(time, delta);
         }
     }
 
+    //Función para visualizar el puntaje en el escenario
     showScore() {
         this.score += 10;
         this.scoreText.setText('PUNTOS: ' + this.score);
     }
 
+    //Función replay, pero no se terminó la implementación.
     Replay() {
         this.gameOverText.visible = false;
         this.returnButton.visible = false;
